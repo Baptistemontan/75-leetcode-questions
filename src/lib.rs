@@ -10,3 +10,4 @@ pub mod missing_number;
 pub mod reverse_bits;
 pub mod max_depth_btree;
 pub mod same_tree;
+pub mod invert_btree;
