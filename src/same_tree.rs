@@ -26,31 +26,21 @@ impl Solution {
     pub fn is_same_tree(p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>) -> bool {
         let mut pmut = p;
         let mut qmut = q;
-        match pmut.take() {
-            None => {
-                match qmut.take() {
-                    None => true,
-                    _ => false
-                }
-            },
-            Some(node1) => {
-                match qmut.take() {
-                    None => false,
-                    Some(node2) => {
-                        if node1.borrow().val == node2.borrow().val {
-                            let left1 = node1.borrow_mut().left.take();
-                            let right1 = node1.borrow_mut().right.take();
-                            let left2 = node2.borrow_mut().left.take();
-                            let right2 = node2.borrow_mut().right.take();
-                            Self::is_same_tree(left1, left2) && Self::is_same_tree(right1, right2)
-                        } else {
-                            false
-                        }
-                    }
+        match (pmut.take(), qmut.take()) {
+            (None, None) => true,
+            (Some(_), None) | (None, Some(_)) => false,
+            (Some(node1), Some(node2)) => {
+                if node1.borrow().val == node2.borrow().val {
+                    let left1 = node1.borrow_mut().left.take();
+                    let right1 = node1.borrow_mut().right.take();
+                    let left2 = node2.borrow_mut().left.take();
+                    let right2 = node2.borrow_mut().right.take();
+                    Self::is_same_tree(left1, left2) && Self::is_same_tree(right1, right2)
+                } else {
+                    false
                 }
             }
         }
-
     }
 }
 
