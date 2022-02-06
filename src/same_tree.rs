@@ -23,10 +23,8 @@ impl TreeNode {
 pub struct Solution;
 
 impl Solution {
-    pub fn is_same_tree(p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>) -> bool {
-        let mut pmut = p;
-        let mut qmut = q;
-        match (pmut.take(), qmut.take()) {
+    pub fn is_same_tree(mut p: Option<Rc<RefCell<TreeNode>>>, mut q: Option<Rc<RefCell<TreeNode>>>) -> bool {
+        match (p.take(), q.take()) {
             (None, None) => true,
             (Some(_), None) | (None, Some(_)) => false,
             (Some(node1), Some(node2)) => {
