@@ -9,31 +9,27 @@ impl Solution {
     }
 }
 
+pub fn tester(input_str: &str, expected: i32) {
+    let input = u32::from_str_radix(input_str, 2).unwrap();
+    assert_eq!(Solution::hammingWeight(input), expected);
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn test1() {
-        let input_str = "00000000000000000000000000001011";
-        let input = u32::from_str_radix(input_str, 2).unwrap();
-        let expected = 3;
-        assert_eq!(Solution::hammingWeight(input), expected);
+        tester("00000000000000000000000000001011", 3);
     }
 
     #[test]
     fn test2() {
-        let input_str = "00000000000000000000000010000000";
-        let input = u32::from_str_radix(input_str, 2).unwrap();
-        let expected = 1;
-        assert_eq!(Solution::hammingWeight(input), expected);
+        tester("00000000000000000000000010000000", 1);
     }
 
     #[test]
     fn test3() {
-        let input_str = "11111111111111111111111111111101";
-        let input = u32::from_str_radix(input_str, 2).unwrap();
-        let expected = 31;
-        assert_eq!(Solution::hammingWeight(input), expected);
+        tester("11111111111111111111111111111101", 31);
     }
 }
