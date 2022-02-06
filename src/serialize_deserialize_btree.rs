@@ -10,14 +10,33 @@ pub struct TreeNode {
 }
 
 impl TreeNode {
-  #[inline]
-  pub fn new(val: i32) -> Self {
-    TreeNode {
-      val,
-      left: None,
-      right: None
+    #[inline]
+    pub fn new(val: i32) -> Self {
+        TreeNode {
+        val,
+        left: None,
+        right: None
+        }
     }
-  }
+
+    pub fn dup(&self) -> Self {
+        let left = Self::dup_option(&self.left);
+        let right = Self::dup_option(&self.right);
+        TreeNode {
+            val: self.val,
+            left,
+            right
+        }
+    }
+
+    pub fn dup_option(root: &Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+        match root {
+            None => None,
+            Some(n) => {
+                Some(Rc::new(RefCell::new(n.as_ref().borrow().dup())))
+            }
+        }
+    }
 }
 struct Codec {
 	
@@ -88,12 +107,10 @@ impl Codec {
     }
 }
 
-pub fn tester(root: Option<Rc<RefCell<TreeNode>>>, expected: Option<Rc<RefCell<TreeNode>>>) {
+pub fn tester(root: Option<Rc<RefCell<TreeNode>>>) {
     let codec = Codec::new();
-    let data = codec.serialize(root);
-    // {val:3,left:{val:9,left:{None},right:{None}},right:{val:20,left:{val:15,left:{None},right:{None}},right:{val:7,left:{None},right:{None}}}}
-    // println!("{}", data);
-    assert_eq!(codec.deserialize(data), expected);
+    let data = codec.serialize(TreeNode::dup_option(&root));
+    assert_eq!(codec.deserialize(data), root);
 }
 
 #[cfg(test)]
@@ -123,27 +140,6 @@ mod tests {
                 })))
             })))
         })));
-        let expected = Some(Rc::new(RefCell::new(TreeNode {
-            val: 3,
-            left: Some(Rc::new(RefCell::new(TreeNode {
-                val: 9,
-                left: None,
-                right: None
-            }))),
-            right: Some(Rc::new(RefCell::new(TreeNode {
-                val: 20,
-                left: Some(Rc::new(RefCell::new(TreeNode {
-                    val: 15,
-                    left: None,
-                    right: None
-                }))),
-                right: Some(Rc::new(RefCell::new(TreeNode {
-                    val: 7,
-                    left: None,
-                    right: None
-                })))
-            })))
-        })));
-        tester(root, expected);
+        tester(root);
     }
 }
