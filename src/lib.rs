@@ -8,3 +8,4 @@ pub mod hamming_weight;
 pub mod counting_bits;
 pub mod missing_number;
 pub mod reverse_bits;
+pub mod max_depth_btree;
