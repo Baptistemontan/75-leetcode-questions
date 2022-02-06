@@ -1,6 +1,7 @@
 pub struct Solution;
 
 impl Solution {
+    #![allow(non_snake_case)]
     pub fn hammingWeight(n: u32) -> i32 {
         (0..u32::BITS).map(|i| 1 << i)
             .map(|mask| n & mask)
