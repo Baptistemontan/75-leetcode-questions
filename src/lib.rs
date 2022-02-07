@@ -14,3 +14,6 @@ pub mod invert_btree;
 pub mod serialize_deserialize_btree;
 pub mod treenode;
 pub mod climb_stairs;
+pub mod coin_change;
+pub mod merge_two_linkedlist;
+pub mod linked_list;
