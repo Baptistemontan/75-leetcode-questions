@@ -18,3 +18,4 @@ pub mod coin_change;
 pub mod merge_two_linkedlist;
 pub mod linked_list;
 pub mod reorder_list_bad;
+pub mod reorder_list;
